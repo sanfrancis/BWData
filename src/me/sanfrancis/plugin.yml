@@ -1,0 +1,9 @@
+name: BWData
+version: 0.1
+author: sanfrancis
+main: me.sanfrancis.main.BWData
+
+commands:
+   bwdata:
+     description: Open the Starting BWData inventory!
+     usage: /<command>
