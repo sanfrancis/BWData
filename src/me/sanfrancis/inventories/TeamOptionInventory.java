@@ -29,7 +29,7 @@ public class TeamOptionInventory {
         //TODO Find better item for this possibilty, set normal to 4 per team
         members.setAmount( 1 );
         ItemMeta membersItemMeta = members.getItemMeta();
-        membersItemMeta.setDisplayName( ChatColor.BLUE + "Players" );
+        membersItemMeta.setDisplayName( ChatColor.BLUE + "Player per Team" );
         membersItemMeta.setLore( Arrays.asList( "Click to get to", "options for the", "players per team" ) );
         members.setItemMeta( membersItemMeta );
 

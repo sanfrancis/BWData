@@ -40,7 +40,7 @@ public class BWDataStartInventory {
         ItemStack bronze = new ItemStack( Material.CLAY_BRICK );
         bronze.setAmount( 1 );
         ItemMeta bronzeItemMeta = bronze.getItemMeta();
-        bronzeItemMeta.setDisplayName( "§12Bronze" );
+        bronzeItemMeta.setDisplayName( ChatColor.RED + "Bronze" );
         bronzeItemMeta.setLore( Arrays.asList( "Click to get to" , "bronze spawn options" ) );
         bronze.setItemMeta( bronzeItemMeta );
 
@@ -74,7 +74,6 @@ public class BWDataStartInventory {
         inventory.setItem( 28 , bronze );               // File 3, new Dir, everyone own File
         inventory.setItem( 31 , iron );                 // File 4, new Dir, everyone own File
         inventory.setItem( 34 , gold );                 // File 5, new Dir, everyone own File
-        inventory.setItem( 44 , back );
 
         //TODO Add Time Set Inv
         //TODO Add Spawns Inv

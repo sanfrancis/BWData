@@ -1,6 +1,7 @@
 package me.sanfrancis.listener;
 
 import me.sanfrancis.inventories.BWDataStartInventory;
+import me.sanfrancis.inventories.PlayerPerTeamInventory;
 import me.sanfrancis.inventories.TeamAmountInventory;
 import me.sanfrancis.inventories.TeamOptionInventory;
 import org.bukkit.ChatColor;
@@ -15,53 +16,66 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class InventoryClickListener implements Listener {
 
     @EventHandler
-    public void onClick( InventoryClickEvent event ) {
+    public void onClick( InventoryClickEvent event ) throws NullPointerException {
 
-        if ( event.getClickedInventory().getTitle().equalsIgnoreCase( "Bedwars Data" ) ) {
+        if ( event.getClickedInventory( ).getTitle( ).equalsIgnoreCase( "Bedwars Data" ) ) {
             //BedwarsDataStartInventory
+
             event.setCancelled( true );
-            if ( event.isLeftClick() || event.isRightClick() || event.isShiftClick() ) {
-                Player player = ( Player ) event.getWhoClicked();
-                if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.BLUE + "Team Options" ) ) {
+            if ( event.isLeftClick( ) || event.isRightClick( ) || event.isShiftClick( ) ) {
+                Player player = ( Player ) event.getWhoClicked( );
+                if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.BLUE + "Team Options" ) ) {
                     //TeamOptionInventory
                     TeamOptionInventory.openInventory( player );
                 }
             }
 
-
-        } else if ( event.getClickedInventory().getTitle().equalsIgnoreCase( "Team Options" ) ) {
+        } else if ( event.getClickedInventory( ).getTitle( ).equalsIgnoreCase( "Team Options" ) ) {
             //TeamOptionInventory
+
             event.setCancelled( true );
-            if ( event.isLeftClick() || event.isRightClick() || event.isShiftClick() ) {
-                Player player = ( Player ) event.getWhoClicked();
-                if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.RED + "Back" ) ) {
+            if ( event.isLeftClick( ) || event.isRightClick( ) || event.isShiftClick( ) ) {
+                Player player = ( Player ) event.getWhoClicked( );
+                if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.RED + "Back" ) ) {
                     BWDataStartInventory.openInventory( player );
-                } else if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.BLUE + "Teams" ) ) {
+                } else if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.BLUE + "Teams" ) ) {
                     TeamAmountInventory.openInventory( player );
-                } else if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.BLUE + "Players" ) ) {
-                    //TODO open memberperteaminv
+                } else if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.BLUE + "Player per Team" ) ) {
+                    PlayerPerTeamInventory.openInventory( player );
                 }
             }
 
-
-        } else if ( event.getClickedInventory().getTitle().equalsIgnoreCase( "Team Amount" ) ) {
+        } else if ( event.getClickedInventory( ).getTitle( ).equalsIgnoreCase( "Team Amount" ) ) {
             //TeamAmountInventory
+
             event.setCancelled( true );
-            if ( event.isLeftClick() || event.isRightClick() || event.isShiftClick() ) {
-                Player player = ( Player ) event.getWhoClicked();
-                if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.RED + "Back" ) ) {
+            if ( event.isLeftClick( ) || event.isRightClick( ) || event.isShiftClick( ) ) {
+                Player player = ( Player ) event.getWhoClicked( );
+                if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.RED + "Back" ) ) {
                     TeamOptionInventory.openInventory( player );
-                } else if ( event.getCurrentItem().getAmount() == 2 ) {
-                    TeamAmountInventory.clickTwoTeams( event.getClickedInventory() , player.getWorld() );
-                } else if ( event.getCurrentItem().getAmount() == 4 ) {
-                    TeamAmountInventory.clickFourTeams( event.getClickedInventory() , player.getWorld() );
-                } else if ( event.getCurrentItem().getAmount() == 8 ) {
-                    TeamAmountInventory.clickEightTeams( event.getClickedInventory() , player.getWorld() );
+                } else if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( "2 Teams" ) ) {
+                    TeamAmountInventory.clickTwoTeams( event.getClickedInventory( ), player );
+                } else if ( event.getCurrentItem( ).getAmount( ) == 4 ) {
+                    TeamAmountInventory.clickFourTeams( event.getClickedInventory( ), player );
+                } else if ( event.getCurrentItem( ).getAmount( ) == 8 ) {
+                    TeamAmountInventory.clickEightTeams( event.getClickedInventory( ), player );
                 }
             }
 
+        } else if ( event.getClickedInventory( ).getTitle( ).equalsIgnoreCase( "Player per Team" ) ) {
+            //PlayerPerTeamInventory
 
+            event.setCancelled( true );
+            if ( event.isLeftClick( ) || event.isRightClick( ) || event.isShiftClick( ) ) {
+                Player player = ( Player ) event.getWhoClicked( );
+                if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.GREEN + "Add one" ) ) {
+                    PlayerPerTeamInventory.clickAdd( player, event.getClickedInventory( ) );
+                } else if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.RED + "Remove one" ) ) {
+                    PlayerPerTeamInventory.ClickRemove( player, event.getClickedInventory( ) );
+                } else if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.RED + "Back" ) ) {
+                    TeamOptionInventory.openInventory( player );
+                }
+            }
         }
     }
-
 }

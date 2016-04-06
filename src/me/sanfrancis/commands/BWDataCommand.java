@@ -18,24 +18,22 @@ public class BWDataCommand implements CommandExecutor {
     public boolean onCommand ( CommandSender sender, Command command, String s, String[] args ) {
 
         if ( command.getName().equalsIgnoreCase( "bwdata" ) ) {
-            Player player = (Player) sender;
-            World currentWorld = player.getWorld();
-            Files.createBWDataDir( currentWorld );
-            Files.createGeneralDataFile( currentWorld );
-            Files.createSpawnsFile( currentWorld );
-            Files.createBronzeDir( currentWorld );
-            Files.createIronDir( currentWorld );
-            Files.createGoldDir( currentWorld );
-
             if ( sender instanceof Player ) {
-                if ( sender.isOp() ) {
+                Player player = (Player) sender;
+                if ( player.isOp() )
                     BWDataStartInventory.openInventory( player );
+                    World currentWorld = player.getWorld();
+                    Files.createBWDataDir( currentWorld );
+                    Files.createGeneralDataFile( currentWorld );
+                    Files.createSpawnsFile( currentWorld );
+                    Files.createBronzeDir( currentWorld );
+                    Files.createIronDir( currentWorld );
+                    Files.createGoldDir( currentWorld );
                 } else {
-                    sender.sendMessage( Strings.ERROR + "You have to be OP to use this command! " );
+                sender.sendMessage( Strings.ERROR + "You have to be OP to use this command! " );
                 }
             } else {
-                System.out.println( "[ ERROR ] Only players can use this command!" );
-            }
+            System.out.println( "[ ERROR ] Only players can use this command!" );
         }
         return true;
     }

@@ -23,6 +23,9 @@ public class TeamAmountInventory {
     public static void openInventory( Player player ) {
         Inventory inventory = player.getServer().createInventory( null , 5 * 9 , "Team Amount" );
 
+        //TEAMS: Black   , green, orange , blue , aqua   , red , pink , yellow
+        //Teams: Schwarz , Grün , orange , blau , türkis , rot , pink , gelb
+
         ItemStack two = new ItemStack( Material.BED );
         two.setAmount( 2 );
         ItemMeta twoItemMeta = two.getItemMeta();
@@ -56,7 +59,15 @@ public class TeamAmountInventory {
         inventory.setItem( 13 , four );
         inventory.setItem( 16 , eight );
 
-        inventory.setItem( 31 , choosen );  // 28 , 31 , 34
+        // 28 , 31 , 34
+
+        if ( getCurrent( player.getWorld() ) == 2 ) {
+            inventory.setItem( 28 , choosen );
+        } else if ( getCurrent( player.getWorld() ) == 2 ) {
+            inventory.setItem( 31 , choosen );
+        } else if ( getCurrent( player.getWorld() ) == 8 ) {
+            inventory.setItem( 34 , choosen );
+        }
 
         inventory.setItem( 44 , back );
 
@@ -65,7 +76,7 @@ public class TeamAmountInventory {
 
     }
 
-    private static int getCurrent( World world , Inventory inventory ) {
+    private static int getCurrent( World world ) {
 
         String GENERAL_DATA_FILE;
 
@@ -79,23 +90,11 @@ public class TeamAmountInventory {
             int current = cfg.getInt( prefix + ".TeamAmount" );
 
             if ( current == 2 ) {
-                if( inventory.getItem( 28 ).getAmount() == 2 ) {
-                    return current;
-                } else {
-                    return 0;
-                }
+                return current;
             } else if ( current == 4 ) {
-                if ( inventory.getItem( 31 ).getAmount() ==4 ) {
-                    return current;
-                } else {
-                    return 0;
-                }
+            return current;
             } else if ( current == 8 ) {
-                if ( inventory.getItem( 34 ).getAmount() == 8 ) {
-                    return current;
-                } else {
-                    return 0;
-                }
+                return current;
             }
         } else {
             Files.createGeneralDataFile( world );
@@ -104,62 +103,68 @@ public class TeamAmountInventory {
         return 0;
     }
 
-
-
-
-
-
-
     // 28 , 31 , 34
 
-    public static void clickTwoTeams( Inventory inventory, World world ) {
-        int current = getCurrent( world , inventory );
-        if ( current == 2 ) {
-            System.out.println( "Idiot" );
-        } else if ( current == 4 ) {
-            ItemStack choiceItem =inventory.getItem( 31 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 28 , choiceItem );
+    public static void clickTwoTeams( Inventory inventory , Player player ) {
+        World world = player.getWorld();
+
+        int current = getCurrent( world );
+
+        if ( current != 2 ) {
+            inventory.remove( Material.EMERALD_BLOCK );
+
+            ItemStack choosen = new ItemStack( Material.EMERALD_BLOCK );
+            ItemMeta choosenItemMeta = choosen.getItemMeta();
+            choosenItemMeta.setDisplayName( ChatColor.GREEN + "Choice" );
+            choosen.setItemMeta( choosenItemMeta );
+
+            inventory.setItem( 28 , choosen );
+
+            player.updateInventory();
+
             setFileToTwo( world );
-        } else if ( current == 8 ) {
-            ItemStack choiceItem =inventory.getItem( 34 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 28 , choiceItem );
-            setFileToTwo( world );
+        }
+
+    }
+
+    public static void clickFourTeams( Inventory inventory, Player player ) {
+        World world = player.getWorld();
+        int current = getCurrent( world );
+
+        if ( current != 4 ) {
+            inventory.remove( Material.EMERALD_BLOCK );
+
+            ItemStack choosen = new ItemStack( Material.EMERALD_BLOCK );
+            ItemMeta choosenItemMeta = choosen.getItemMeta();
+            choosenItemMeta.setDisplayName( ChatColor.GREEN + "Choice" );
+            choosen.setItemMeta( choosenItemMeta );
+
+            inventory.setItem( 31 , choosen );
+
+            player.updateInventory();
+
+            setFileToFour( world );
         }
     }
 
-    public static void clickFourTeams( Inventory inventory, World world ) {
-        int current = getCurrent( world , inventory );
-        if ( current == 4 ) {
-            System.out.println( "Idiot" );
-        } else if ( current== 2 ) {
-            ItemStack choiceItem =inventory.getItem( 31 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 28 , choiceItem );
-            setFileToFour( world );
-        } else if ( current == 8 ) {
-            ItemStack choiceItem =inventory.getItem( 34 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 31 , choiceItem );
-            setFileToFour( world );
-        }
-    }
+    public static void clickEightTeams( Inventory inventory, Player player ) {
+        World world = player.getWorld();
+        int current = getCurrent( world );
 
-    public static void clickEightTeams( Inventory inventory, World world ) {
-        int current = getCurrent( world , inventory );
-        if ( current == 8 ) {
-            System.out.println( "Idiot" );
-        } else if ( current== 2 ) {
-            ItemStack choiceItem =inventory.getItem( 28 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 34 , choiceItem );
+        if ( current != 8 ) {
+            inventory.remove( Material.EMERALD_BLOCK );
+
+            ItemStack choosen = new ItemStack( Material.EMERALD_BLOCK );
+            ItemMeta choosenItemMeta = choosen.getItemMeta();
+            choosenItemMeta.setDisplayName( ChatColor.GREEN + "Choice" );
+            choosen.setItemMeta( choosenItemMeta );
+
+            inventory.setItem( 34 , choosen );
+
+            player.updateInventory();
+
             setFileToEight( world );
-        } else if ( current == 5 ) {
-            ItemStack choiceItem =inventory.getItem( 31 );
-            inventory.remove( choiceItem );
-            inventory.setItem( 34 , choiceItem );
-            setFileToEight( world );
+
         }
     }
 
@@ -192,7 +197,7 @@ public class TeamAmountInventory {
         if ( data_file.exists() ) {
             YamlConfiguration cfg = YamlConfiguration.loadConfiguration( data_file );
 
-            cfg.set( Strings.DataFile_Prefix + ".TeamAmount" , 8 );
+            cfg.set( Strings.DataFile_Prefix + ".TeamAmount" , 4 );
             try {
                 cfg.save( data_file );
             } catch ( IOException e ) {

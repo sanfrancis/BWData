@@ -62,12 +62,7 @@ public class SpawnInventory {
             if ( spawns_file.exists() ) {
                 YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawns_file );
                 String name = new String( "RED" );
-
-
-
             }
-
-
         } else {
             Files.createSpawnsFile( player.getWorld() );
         }
