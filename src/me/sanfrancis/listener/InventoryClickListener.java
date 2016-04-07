@@ -4,11 +4,16 @@ import me.sanfrancis.inventories.BWDataStartInventory;
 import me.sanfrancis.inventories.PlayerPerTeamInventory;
 import me.sanfrancis.inventories.TeamAmountInventory;
 import me.sanfrancis.inventories.TeamOptionInventory;
+import me.sanfrancis.util.Files;
+import me.sanfrancis.util.Strings;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+
+import java.io.File;
 
 /**
  * Created by Max on 30.03.16.
@@ -25,8 +30,12 @@ public class InventoryClickListener implements Listener {
             if ( event.isLeftClick( ) || event.isRightClick( ) || event.isShiftClick( ) ) {
                 Player player = ( Player ) event.getWhoClicked( );
                 if ( event.getCurrentItem( ).getItemMeta( ).getDisplayName( ).equalsIgnoreCase( ChatColor.BLUE + "Team Options" ) ) {
-                    //TeamOptionInventory
                     TeamOptionInventory.openInventory( player );
+                } else if ( event.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase( ChatColor.BLUE + "Spawns" ) ) {
+                    File GENERAL_DATA_FILE = new File ( event.getWhoClicked().getWorld().getWorldFolder().getAbsolutePath() + "/BWData" + "/" + "GeneralData" + ".yml" );
+                    YamlConfiguration cfg = YamlConfiguration.loadConfiguration( GENERAL_DATA_FILE );
+                    int amount = cfg.getInt( Strings.DataFile_Prefix + ".TeamAmount" );
+                    Files.createSpawnsFile( event.getWhoClicked().getWorld() , amount );
                 }
             }
 
