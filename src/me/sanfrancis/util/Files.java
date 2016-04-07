@@ -1,11 +1,12 @@
 package me.sanfrancis.util;
 
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Max on 30.03.16.
@@ -52,15 +53,172 @@ public class Files {
 
     }
 
-    public static void createSpawnsFile( World world ) {
+    public static void createSpawnsFile( World world , int teamAmount ) {
+
+        //TEAMS: Black   , green, orange , blue , aqua   , red , pink , yellow
+        // Teams 2: RED , BLUE
+        // Teams 4: RED , BLUE , GREEN , YELLOW
+        // Teams 8: RED , BLUE , GREEN , YELLOW , BLACK , PINK , ORANGE , AQUA
+
 
         SPAWNS_FILE = world.getWorldFolder().getAbsolutePath() + "/BWData" + "/" + "Spawns" + ".yml";
         File spawn_file = new File( SPAWNS_FILE );
-        if ( !spawn_file.exists() ) {
-            try {
-                spawn_file.createNewFile();
-            } catch ( IOException e ) {
-                e.printStackTrace();
+        if ( spawn_file.exists() ) {
+            spawn_file.delete();
+            switch ( teamAmount ) {
+                case 2:
+                    List< String > twoTeamsList = Arrays.asList( "RED", "BLUE" );
+                    for ( String prefix : twoTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                case 4:
+                    List< String > fourTeamsList = Arrays.asList( "RED", "BLUE" , "GREEN" , "YELLOW" );
+                    for ( String prefix : fourTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                case 8:
+                    List< String > eightTeamsList = Arrays.asList( "RED", "BLUE" , "GREEN" , "YELLOW" , "BLACK" , "PINK" , "ORANGE" , "AQUA" );
+                    for ( String prefix : eightTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println( "Impossible Team amount. Using 4 teams now." );
+                    List< String > defualtList = Arrays.asList( "RED", "BLUE" , "GREEN" , "YELLOW" );
+                    for ( String prefix : defualtList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+            }
+
+            // Spawn file does not exist
+
+        } else if ( !spawn_file.exists() ) {
+            switch ( teamAmount ) {
+                case 2:
+                    List< String > twoTeamsList = Arrays.asList( "RED", "BLUE" );
+                    for ( String prefix : twoTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                case 4:
+                    List< String > fourTeamsList = Arrays.asList( "RED", "BLUE", "GREEN", "YELLOW" );
+                    for ( String prefix : fourTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                case 8:
+                    List< String > eightTeamsList = Arrays.asList( "RED", "BLUE", "GREEN", "YELLOW", "BLACK", "PINK", "ORANGE", "AQUA" );
+                    for ( String prefix : eightTeamsList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+                default:
+                    System.out.println( "Impossible Team amount. Using 4 teams now." );
+                    List< String > defualtList = Arrays.asList( "RED", "BLUE", "GREEN", "YELLOW" );
+                    for ( String prefix : defualtList ) {
+                        YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawn_file );
+                        cfg.set( prefix + ".X", 0 );
+                        cfg.set( prefix + ".Y", 0 );
+                        cfg.set( prefix + ".Z", 0 );
+                        cfg.set( prefix + ".Yaw", 0 );
+                        cfg.set( prefix + ".Pitch", 0 );
+                        cfg.set( prefix + ".World", world.getName( ) );
+
+                        try {
+                            cfg.save( spawn_file );
+                        } catch ( IOException e ) {
+                            e.printStackTrace( );
+                        }
+                    }
+                    break;
+
             }
         }
     }

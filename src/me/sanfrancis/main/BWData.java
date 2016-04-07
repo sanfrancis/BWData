@@ -3,6 +3,8 @@ package me.sanfrancis.main;
 import me.sanfrancis.commands.BWDataCommand;
 import me.sanfrancis.listener.InventoryClickListener;
 import me.sanfrancis.listener.PlayerJoinListener;
+import me.sanfrancis.util.Files;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +19,8 @@ public class BWData extends JavaPlugin {
         sendEnableMessage();
         registerCommands();
         registerListeners();
+        testUnicode();
+        Files.createSpawnsFile( this.getServer().getWorld( "world" ) , 2 );
 
     }
 
@@ -45,6 +49,13 @@ public class BWData extends JavaPlugin {
 
     }
 
-    private void createFiles() {
+    private void testUnicode() {
+
+        ConsoleCommandSender console = this.getServer().getConsoleSender();
+
+        char kreuz = '\u00D7' ;
+        char haken = '\u2714' ;
+
+
     }
 }

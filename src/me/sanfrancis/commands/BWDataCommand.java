@@ -14,8 +14,14 @@ import org.bukkit.entity.Player;
  */
 public class BWDataCommand implements CommandExecutor {
 
+    //Unicode Häkchen: \u2714 , Kreuz: \u00D7
+
     @Override
     public boolean onCommand ( CommandSender sender, Command command, String s, String[] args ) {
+
+
+        char haken = '\u2714' ;
+        char kreuz = '\u00D7' ;
 
         if ( command.getName().equalsIgnoreCase( "bwdata" ) ) {
             if ( sender instanceof Player ) {
@@ -25,7 +31,6 @@ public class BWDataCommand implements CommandExecutor {
                     World currentWorld = player.getWorld();
                     Files.createBWDataDir( currentWorld );
                     Files.createGeneralDataFile( currentWorld );
-                    Files.createSpawnsFile( currentWorld );
                     Files.createBronzeDir( currentWorld );
                     Files.createIronDir( currentWorld );
                     Files.createGoldDir( currentWorld );

@@ -23,7 +23,7 @@ public class BWDataStartInventory {
         //Item-Creation
 
         ItemStack teams = new ItemStack( Material.DIAMOND_BLOCK );
-        //TODO Find item for this possibilty
+        //TODO Find better item
         teams.setAmount( 1 );
         ItemMeta teamsItemMeta = teams.getItemMeta();
         teamsItemMeta.setDisplayName( ChatColor.BLUE + "Team Options" );
