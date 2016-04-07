@@ -22,6 +22,8 @@ public class Files {
 
     public static void createBWDataDir( World world ) {
 
+
+
         BWDATA_DIR = world.getWorldFolder().getPath() + "/BWData";
         File dir = new File( BWDATA_DIR );
 
