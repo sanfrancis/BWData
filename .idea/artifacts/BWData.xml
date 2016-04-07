@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BWData">
+    <output-path>$USER_HOME$/Desktop/Dev/Localhost/plugins</output-path>
+    <root id="archive" name="BWData.jar">
+      <element id="extracted-dir" path="$USER_HOME$/Desktop/Dev/API/spigot-api.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/me/sanfrancis/plugin.yml" />
+      <element id="module-output" name="BWData" />
+    </root>
+  </artifact>
+</component>
