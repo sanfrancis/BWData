@@ -64,9 +64,6 @@ public class BWDataStartInventory {
         backItemMeta.setLore( Arrays.asList( "Click to get back" ) );
         back.setItemMeta( backItemMeta );
 
-
-
-
         //Inventory Add
         inventory.setItem( 10 , teams );                // File 1, Name: GeneralData.yml
         //inventory.setItem( 13 , free space );

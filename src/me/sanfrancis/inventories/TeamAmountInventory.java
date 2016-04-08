@@ -61,18 +61,23 @@ public class TeamAmountInventory {
 
         // 28 , 31 , 34
 
-        if ( getCurrent( player.getWorld() ) == 2 ) {
-            inventory.setItem( 28 , choosen );
-        } else if ( getCurrent( player.getWorld() ) == 2 ) {
-            inventory.setItem( 31 , choosen );
-        } else if ( getCurrent( player.getWorld() ) == 8 ) {
-            inventory.setItem( 34 , choosen );
+        switch ( getCurrent( player.getWorld() ) ) {
+            case 2:
+                inventory.setItem( 28 , choosen );
+                break;
+            case 4:
+                inventory.setItem( 31 , choosen );
+                break;
+            case 8:
+                inventory.setItem( 34 , choosen );
+                break;
+            default:
+                break;
         }
 
         inventory.setItem( 44 , back );
 
         player.openInventory( inventory );
-
 
     }
 

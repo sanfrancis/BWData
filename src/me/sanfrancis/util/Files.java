@@ -75,7 +75,7 @@ public class Files {
                         cfg.set( prefix + ".Z", 0 );
                         cfg.set( prefix + ".Yaw", 0 );
                         cfg.set( prefix + ".Pitch", 0 );
-                        cfg.set( prefix + ".World", world.getName( ) );
+                        cfg.set( prefix + ".World", world.getName() );
 
                         try {
                             cfg.save( spawn_file );

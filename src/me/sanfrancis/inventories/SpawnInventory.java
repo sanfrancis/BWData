@@ -1,5 +1,7 @@
 package me.sanfrancis.inventories;
 
+import me.sanfrancis.util.Files;
+import me.sanfrancis.util.Strings;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,54 +19,65 @@ import java.util.List;
  */
 public class SpawnInventory {
 
-    public static void openTwoTeamInventory( Player player ) {
+    public static void openSpawnInventory( Player player ) {
 
-        Inventory inventory = player.getServer().createInventory( null , 4 * 9 , "Spawns" );
+        File data_file = new File( player.getWorld().getWorldFolder().getPath() + "/BWData" + "/" + "GeneralData" + ".yml" );
+        YamlConfiguration cfgdata = YamlConfiguration.loadConfiguration( data_file );
+        int teamAmount = cfgdata.getInt( Strings.DataFile_Prefix + ".TeamAmount" );
 
-        File spawns_file = new File( player.getWorld().getWorldFolder().getPath() + "/BWData" + "/" + "spawns" + ".yml" );
-        if ( spawns_file.exists() ) {
+        switch ( teamAmount ) {
+            case 2:
 
-            ItemStack teamRed = new ItemStack( Material.WOOL , 1, (byte) 14 );
-            teamRed.getItemMeta().setDisplayName( ChatColor.RED + "RED" );
-            teamRed.setItemMeta( teamRed.getItemMeta() );
+                Inventory inventory = player.getServer( ).createInventory( null, 4 * 9, "Spawns" );
 
-            ItemStack teamBlue = new ItemStack( Material.WOOL , 1 , (byte) 11 );
-            ItemMeta teamBlueItemMeta = teamBlue.getItemMeta();
-            teamBlueItemMeta.setDisplayName( ChatColor.BLUE + "BLUE" );
-            teamBlue.setItemMeta( teamBlueItemMeta );
+                File spawns_file = new File( player.getWorld( ).getWorldFolder( ).getPath( ) + "/BWData" + "/" + "spawns" + ".yml" );
+                if ( spawns_file.exists( ) ) {
 
-            ItemStack delete = new ItemStack( Material.BARRIER );
-            ItemMeta deleteItemMeta  = delete.getItemMeta();
-            deleteItemMeta.setDisplayName( ChatColor.BOLD + "" +  ChatColor.RED + "Delete" );
-            delete.setItemMeta( deleteItemMeta );
+                    ItemStack teamRed = createWool( Material.WOOL, ChatColor.RED + "RED", 1, ( byte ) 14, null );
 
-            ItemStack set = createWool( Material.WOOL , ChatColor.GREEN + "Already set" , 1 , (byte) 5 , null );
+                    ItemStack teamBlue = createWool( Material.WOOL, ChatColor.BLUE + "BLUE", 1, ( byte ) 11, null );
 
-            ItemStack notset = createWool( Material.WOOL , ChatColor.RED + "Not yet et" , 1 , (byte) 14 , null );
+                    ItemStack delete = createItem( Material.BARRIER, ChatColor.RED + "Delete", 1, null );
 
-            ItemStack setnow = createItem( Material.GOLD_AXE , ChatColor.GOLD + "Set now" , 1 , null );
+                    ItemStack set = createWool( Material.WOOL, ChatColor.GREEN + "Already set", 1, ( byte ) 5, null );
 
-            ItemStack back = new ItemStack( Material.ARROW );
-            ItemMeta backItemMeta = back.getItemMeta();
-            backItemMeta.setDisplayName( ChatColor.RED + "Back" );
-            backItemMeta.setLore( Arrays.asList( "Click to get back" ) );
-            back.setItemMeta( backItemMeta );
+                    ItemStack notset = createWool( Material.WOOL, ChatColor.RED + "Not yet set", 1, ( byte ) 14, null );
 
-            // 1 , TEAM , 3 , 4 , 5 , SET? , 7 , SET NOW , DELETE
+                    ItemStack setnow = createItem( Material.GOLD_AXE, ChatColor.GOLD + "Set now", 1, null );
 
-            inventory.setItem( 1 , teamRed );
-            inventory.setItem( 10 , teamBlue );
-            inventory.setItem( 26 , back );
+                    ItemStack back = new ItemStack( Material.ARROW );
+                    ItemMeta backItemMeta = back.getItemMeta( );
+                    backItemMeta.setDisplayName( ChatColor.RED + "Back" );
+                    backItemMeta.setLore( Arrays.asList( "Click to get back" ) );
+                    back.setItemMeta( backItemMeta );
 
-            //TODO Add: Set? ( Red / Green Wool, Bad because of team colour? )  , Delete ( Barrier )  , Set Now
+                    // 1 , TEAM , 3 , 4 , 5 , SET? , 7 , SET NOW , DELETE
 
-            // Icons for Team RED
-            if ( spawns_file.exists() ) {
-                YamlConfiguration cfg = YamlConfiguration.loadConfiguration( spawns_file );
-                String name = new String( "RED" );
-            }
-        } else {
-            //Files.createSpawnsFile( player.getWorld() , 2 );
+                    inventory.setItem( 1, teamRed );
+                    inventory.setItem( 10, teamBlue );
+                    inventory.setItem( 26, back );
+
+                    //TODO Add: Set? ( Red / Green Wool, Bad because of team colour? )  , Delete ( Barrier )  , Set Now
+
+                    // Icons for Team RED
+                    if ( spawns_file.exists( ) ) {
+                        YamlConfiguration cfgRed = YamlConfiguration.loadConfiguration( spawns_file );
+                        String name = new String( "RED" );
+                        if ( cfgRed.getDouble( name + ".X" ) != 0 && cfgRed.getDouble( name + ".Z" ) != 0 && cfgRed.getDouble( name + ".Pitch" ) != 0 ) {
+                            inventory.setItem( 5, set );
+                        } else {
+                            inventory.setItem( 5, notset );
+                        }
+
+                        inventory.setItem( 7 , setnow );
+                        inventory.setItem( 8 , delete );
+
+                        player.openInventory( inventory );
+
+                    }
+                } else {
+                    Files.createSpawnsFile( player.getWorld() , teamAmount );
+                }
         }
     }
 
