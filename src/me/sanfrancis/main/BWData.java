@@ -51,8 +51,8 @@ public class BWData extends JavaPlugin {
 
         ConsoleCommandSender console = this.getServer().getConsoleSender();
 
-        char kreuz = '\u00D7' ;
-        char haken = '\u2714' ;
+        char one = '\u00D7' ;
+        char two = '\u2714' ;
 
 
     }
